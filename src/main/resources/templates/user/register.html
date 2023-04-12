@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style type="text/css">
+    from{
+    width: 600px;
+    margin: auto;
+    }
+    form legend{
+    font-size: 20px;
+    }
+    form p span{
+    font-size: 13px;
+    color: rgb(0, 60, 255);
+    font-style: italic;
+    }
+    form.final_btn {
+    text-align: center;
+    }
+    </style>
+    <script src="../../static/js/user/register.js" defer></script>
+</head>
+<body>
+<form name="join_from" action="" method="post" id="jaoin_from" onsubmit="return form_check()">
+    <fieldset>
+        <legend>회원가입</legend>
+        <!--이름 버튼-->
+        <p>
+            <label for="u_name">이름</label>
+            <input type="text" name="u_name" id="u_name" />
+            <br />
+            <span class="err_name"></span>
+        </p>
+
+        <!--아이디 버튼-->
+        <p>
+            <label for="u_id">아이디</label>
+            <input type="text" name="email" id="u_id" />
+            <button type="button" onclick="id_search()">아이디 중복확인</button>
+            <br />
+            <span class="err_id">* 4~12글자까지만 입력 가능 합니다.</span>
+        </p>
+        <!--비밀번호 버튼-->
+        <p>
+            <label for="pwd">비밀번호</label>
+            <input type="text" name="password" id="pwd" />
+            <br />
+            <span class="err_password">* 4~12글자까지만 입력 가능합니다.</span>
+        </p>
+        <p>
+            <label for="repwd">비밀번호 확인</label>
+            <input type="text" name="repwd" id="repwd" />
+            <br />
+        </p>
+
+        <!--생년월일 입력 -->
+        <p>
+        <label for="birth">생년월일</label>
+        <input type="text" name="birth" id="birth" />
+        <br />
+        <span class="err_brith">* ex)19941224 - 8자리로 입력</span>
+        </p>
+
+        <!--주소검색 -->
+        <p>
+            <label for="postalCode">주소검색</label>
+            <input type="text" name="postalCode" id="postalCode" placeholder="우편번호">
+            <button type="button" onclick="add_search()">주소검색</button> <br />
+            <label for="addr1">주소</label>
+            <input type="text" name="addr1" id="addr1" placeholder="기본주소" />
+            <label for="addr2"></label>
+            <input type="text" name="addr2" id="addr2" placeholder="상세주소" />
+        </p>
+
+        <!-- 이메일 확인-->
+        <p>
+            <label for="email_id">이메일</label>
+            <input type="text" name="email_id" id="email_id" /> @
+            <input type="text" name="email_dns" id="email_dns" />
+            <select name="email_sel" id="email_sel" onchange="document.getElementById('email_dns').value = this.options[this.selectedIndex].value"></select>
+            <option value="">직접입력</option>
+            <option value="naver.com">NAVER</option>
+            <option value="kakao.com">KAKAO</option>
+            </select>
+        </p>
+
+        <!--전화번호-->
+        <p>
+            <label for="mobile">전화번호</label>
+            <input type="text" name="mobile" id="mobile" />
+            <br />
+            <span class="err_moblie">* '-'없이 숫자만 입력</span>
+        </p>
+
+        <!--약관동의-->
+        <p>
+            <input type="checkbox" name="agree" id="agree" />
+            <label for="agree">약관동의</label>
+            <br />
+            <span class="err_agree">* 필수</span>
+        </p>
+
+        <!-- 돌아가기, 가입하기-->
+        <p class="final_btn">
+            <button type="button" class="btn">이전으로</button>
+            <button type="submit"class="btn">회원가입</button>
+        </p>
+    </fieldset>
+</form>
+</body>
+</html>
