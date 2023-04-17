@@ -16,13 +16,11 @@ public class UserVO {
     @NotBlank
     private String password;
     @NotBlank
-    private String name;
+    private String id;
     @NotBlank
     private String birth;
     @NotBlank
     private String phone;
-    @NotBlank
-    private String addr;
 
     private UserRole role;
 

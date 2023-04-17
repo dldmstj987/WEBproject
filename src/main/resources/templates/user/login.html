@@ -6,33 +6,84 @@
       xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/home/login.css}" href="../../static/css/home/login.css">
+    <title>로그인</title>
 
+    <style>
+        #app {
+            margin: auto;
+            margin-top: 60px;
+            width: 60%;
+            border: 3px solid #8ac007;
+            padding: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
-<form th:method="post">
-    <h1>Welcome to SPACE;bar</h1>
-    <div id="user-input" class="input-box">
-        <input type="text" name="username" placeholder="아이디를 입력해 주세요">
-        <input type="text" name="password" placeholder="비밀번호를 입력해 주세요">
-    </div>
-    <input id="login-btn" type="submit" value="로그인">
+<h1>Login</h1>
+<div id="app">
+    <table>
+        <tr>
+            <td>아이디</td>
+            <td>
+                <input type="text" id="id" placeholder="아이디" size="20" />
+            </td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td>
+                <input type="text" id="pwd" placeholder="비밀번호" size="20" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" id="login">로그인</button>
+                <a href="account.html">회원가입</a>
+            </td>
+        </tr>
+    </table>
+</div>
 
-    <div>
-        <input type="checkbox" name="">아이디 저장
-        <input type="checkbox" name="remember-me">자동 로그인
-    </div>
-    <a href="">아이디/비밀번호 찾기</a>
-    </div>
+<script>
 
-    <div id="social-login-box" class="input-box">
-        <a href=""><img src="" alt="네이버"></a>
-        <a href=""><img src="" alt="카카오"></a>
-    </div>
-    <input id="register-btn" class="input-box" type="button" value="회원가입" onclick="location.href = '../../templates/user/register.html'">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-</form>
+    // 로그인시 입력한 아이디와 비밀번호를 넘겨준다.
+    // 서버단의 로그인 함수가 MemberDto를 반환하기 때문에 프론트엔드단에서 JSON 형태로 넘어온다.
+    // 아무것도 입력하지 않으면 JSON의 각 Key에 대한 Value가 비어있을 것이기 때문에 조건식으로 검사해준다.
+    // 로그인이 처리되어 정상적으로 넘어왔다면 sessionStorage에 로그인 정보를 저장해서 다른 페이지로 넘겨줄 것이다.
+    $(document).ready(function() {
+        $("#login").click(function() {
+            $.ajax({
+                url: "http://localhost:3306/login",
+                type: "POST",
+                data: {
+                    id: $("#id").val(),
+                    pwd: $("#pwd").val()
+                },
+                success: function(json) {
+                    // alert('success');
+                    // alert(JSON.stringify(json));
+                    if(json === "") {
+                        alert("아이디 또는 비밀번호를 확인하세요.");
+                        $("#id").val("");
+                        $("#pwd").val("");
+                    } else {
+                        // 로그인 정보를 세션에 저장
+                        sessionStorage.setItem("login", JSON.stringify(json));
+                        alert(`${json.name}님 환영합니다!`);
+                        location.href = "../mainhome/home/main.html";
+                    }
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+        });
+    });
+
+</script>
 </body>
 </html>

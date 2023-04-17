@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.WebProject.SPACEbar.domain.dtos.BbsDto">
+    <!-- 게시판 목록 -->
+    <select id="getBbsList" resultType="com.WebProject.SPACEbar.domain.dtos.BbsDto">
+        SELECT SEQ, ID, REF, STEP, DEPTH, TITLE, CONTENT, WDATE, DEL, READCOUNT FROM BBS
+        ORDER BY REF DESC, STEP ASC
+    </select>
+
+    <!--게시물 등록-->
+    <insert id="insertBbs"
+    parameterType="com.WebProject.SPACEbar.domain.dtos.BbsDto">
+INSERT INTO BBS (SEQ, ID, REF, STEP, DEPTH, TITLE, CONTENT, WDATE, DEL, READCOUNT)
+VALUES (NEXTVAL('SEQ_BBS'), #{id}, (SELECT
+IFNULL(MAX(REF)+1, 0) FROM  BBS AS B), 0, 0, #{title}, #{content}, SYSDATE(), 0, 0)
+    </insert>
+
+    <!---게시글 상세보기 페이지-->
+    <select id="com.WebProject.SPACEbar.domain.dtos.BbsDto"
+    resultType="com.WebProject.SPACEbar.domain.dtos.BbsDto">
+SELECT * FROM BBS
+WHERE SEQ = #{seq}
+    </select>
+
+    <!--조회수 증가-->
+    <update id="readcount" parameterType="Integer">
+UPDATE BBS
+SET READCOUNT = READCOUNT+1
+WHERE SEQ = #{seq}
+    </update>
+
+    <!--검색 기능-->
+    <select id="getBbsListSearch"
+    parameterType="com.WebProject.SPACEbar.domain.dtos.BbsDto"
+    resultType="com.WebProject.SPACEbar.domain.dtos.BbsDto">
+SELECT SEQ, ID, REF, STEP, DERTH, TITLE,
+       CONTENT, WDATE, DEL, READCOUNT,
+
+    </select>
+
+
+</mapper>

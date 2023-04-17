@@ -14,6 +14,6 @@ public interface UserMapper {
 
     //회원가입
     @Insert("INSERT INTO `user_tbl` VALUES " +
-            "(#{email}, #{password}, #{name}, #{birth}, #{phone}, #{addr} default)")
+            "(#{email}, #{password}, #{id}, #{birth}, #{phone}, #{addr} default)")
     void register_user(UserVO userVO);
 }

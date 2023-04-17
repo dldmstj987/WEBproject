@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.WebProject.SPACEbar.domain.DAO.MemberDao">
+
+    <!-- 아아디 중복 확인 -->
+    <select id="getId" parameterType="com.WebProject.SPACEbar.domain.dtos.MemberDto" resultType="java.lang.Integer">
+        SELECT IFNULL(COUNT(*), 0) FROM MEMBERS
+        WHERE ID = #{id}
+    </select>
+
+    <!-- 회원 가입 -->
+    <insert id="addMember" parameterType="com.WebProject.SPACEbar.domain.dtos.MemberDto">
+        INSERT INTO MEMBERS(ID, PWD, NAME, EMAIL, AUTH)
+        VALUES (#{id}, #{pwd}, #{name}, #{email}, 3)
+    </insert>
+
+    <!-- 로그인 -->
+    <select id="login" parameterType="com.WebProject.SPACEbar.domain.dtos.MemberDto" resultType="com.WebProject.SPACEbar.domain.dtos.MemberDto">
+        SELECT ID, NAME, EMAIL, AUTH FROM MEMBERS
+        WHERE ID = #{id} AND PWD = #{pwd}
+    </select>
+
+</mapper>
